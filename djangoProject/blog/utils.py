@@ -4,7 +4,9 @@ menu =[{'title': 'about', 'url_name': 'about'},
        {'title': 'add page', 'url_name': 'add_page'},
        {'title': 'feedback', 'url_name': 'feedback'}]
 
+
 class DataMixin:
+
     def get_user_context(self, **kwargs):
         context = kwargs
         cats = Category.objects.all()

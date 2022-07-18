@@ -1,4 +1,8 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+
 from .models import *
 
 # old AddPostForm class
@@ -11,13 +15,13 @@ from .models import *
 
 
 class AddPostForm(forms.ModelForm):
-    def __int__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['cat'].empty_label = "category not chosen"
+        self.fields['cat'].empty_label = 'choose category'
 
     class Meta:
         model = Post
-        fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat'],
+        fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),
             'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
@@ -25,8 +29,9 @@ class AddPostForm(forms.ModelForm):
 
     def clean_title(self):
         title = self.cleaned_data['title']
-        if len(title) > 200:
-            raise ValidationError('cant be longer than 200 symbols')
+        if len(title) > 250:
+            raise ValidationError('length exceeds 250 symbols')
+
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label='login', widget=forms.TextInput(attrs={'class': 'form-input'}))
