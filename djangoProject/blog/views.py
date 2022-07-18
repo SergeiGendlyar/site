@@ -1,5 +1,5 @@
 # importing post
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -102,12 +102,10 @@ def feedback(request):
     return HttpResponse('Feedback')
 
 
-# for showing the login
-def login(request):
-    return HttpResponse('Log In')
 
 
 # created view which is for an 'about' page
+
 def about(request):     # HttpRequest
     return render(request, 'blog/about.html', {'menu': menu,'title': 'About'})
 
@@ -151,21 +149,21 @@ def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Sorry, but the page appears to be not found</h1>')
 
 
-class PostCategory(ListView):
-    model = Post
-    template_name = 'blog/home.html'
-    context_object_name = 'posts'
-    allow_empty = False
-
-    def get_queryset(self):
-        return Post.objects.filter(cat_id=self.kwargs['cat_id'], is_published=True)
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Категория - ' + str(context['posts'][0].cat)
-        context['menu'] = menu
-        context['cat_selected'] = context['posts'][0].cat_id
-        return context
+# class PostCategory(ListView):
+#     model = Post
+#     template_name = 'blog/home.html'
+#     context_object_name = 'posts'
+#     allow_empty = False
+#
+#     def get_queryset(self):
+#         return Post.objects.filter(cat_id=self.kwargs['cat_id'], is_published=True)
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['title'] = 'Category - ' + str(context['posts'][0].cat)
+#         context['menu'] = menu
+#         context['cat_selected'] = context['posts'][0].cat_id
+#         return context
 
 
 
@@ -214,6 +212,9 @@ class PostCategory(ListView):
 #
 #     return render(request, 'blog/index.html', context=context)
 #
+# for showing the login
+# def login(request):
+#     return HttpResponse('Log In')
 
 
 
