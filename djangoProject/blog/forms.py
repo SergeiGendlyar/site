@@ -31,6 +31,7 @@ class AddPostForm(forms.ModelForm):
         title = self.cleaned_data['title']
         if len(title) > 250:
             raise ValidationError('length exceeds 250 symbols')
+        return title
 
 
 class RegisterUserForm(UserCreationForm):

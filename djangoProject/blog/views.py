@@ -10,11 +10,7 @@ from blog.models import *
 from blog.utils import DataMixin
 
 
-
-
-# legacy code at this point
-#
-# # a menu of viable actions
+# a menu of viable actions
 menu = [{'title': 'about', 'url_name': 'about'},
         {'title': 'add post', 'url_name': 'add_page'},
       ]
@@ -102,10 +98,7 @@ def feedback(request):
     return HttpResponse('Feedback')
 
 
-
-
 # created view which is for an 'about' page
-
 def about(request):     # HttpRequest
     return render(request, 'blog/about.html', {'menu': menu,'title': 'About'})
 
